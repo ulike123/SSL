@@ -1,8 +1,11 @@
 
-Just a simple copy/paste file and run by clicking or PowerShell terminal.
+- Just a simple copy/paste file and run by clicking or... 
 
-Sometimes it requires admin permessions depending on security settings set
+- * Run PowerShell terminal and...
 
-on the enduser device.
+- iex (device)/Path/Hello-Free-Wild-SSL.PS1
+___________________________________________________________________
+* Sometimes it requires admin permessions depending on security settings set
 
+on the end user device.
 
