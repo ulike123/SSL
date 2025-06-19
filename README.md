@@ -20,9 +20,9 @@
 18. Fixed SSL must-stable issue.
 
 Just copy/download it from:
-/Hello-Free-Wild-SSL.PS1
+[Hello-Free-Wild-SSL.PS1](https://github.com/ulike123/SSL/edit/Free-SSL-Posh-ACME-Module-User-Visual-Options/Hello-Free-Wild-SSL.PS1)
 
-Also available on:
-[https://ulike123.com/](https://ulike123.com/content.php?action=mypages&page=Hello-Free-Wild-SSL-PS1-ver-1-utility-for-Lets-Encrypt-SSL.html)
+Also available from:
+[Hello-Free-Wild-SSL.PS1](https://ulike123.com/content.php?action=mypages&page=Hello-Free-Wild-SSL-PS1-ver-1-utility-for-Lets-Encrypt-SSL.html)
 
 
