@@ -1,12 +1,24 @@
-# RTL
+# Free wild domain validation(DV) SSL certificate
 
-- 👋 Hi, I’m @ulike123
-- 👀 I’m interested in RTL languages...
-- 🌱 I’m currently learning how to support RTL languages...
-- 💞️ I’m looking to collaborate on RTL languages support...
-- 📫 https://github.com/ulike123/ ...
+ 1. Your friendly visual script for new/renew free wild domain validation(DV) SSL certificate.
+ 2. How-to help shipped with the PSM and…
+ 3. A real free open source MIT license Power Shell Module with…
+ 4. Verstile easy visual options to…
+ 5. Get a production final free SSL wildcard certificate that…
+ 6. Fully comply with most famous technology and internet browsers.
+ 7. #1 world free ssl authorities.
+ 8. Easy to use.
+ 9. Fast and reliable.
+10. Never been easier.
+11. Simple copy/paste process.
+12. 2+ authorities to choose from them.
+13. Quick 10min or less process depending, of course, on many factors.
+14. Before SSL options.
+15. After SSL options.
+16. And yet easy to understand, again, depending on many factors.
 
-<!---
-ulike123/ulike123 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+What are you waiting for?
+Visit  https://ulike123.com for now and get the free wild domain validation SSL free PS script.
+
+
+
