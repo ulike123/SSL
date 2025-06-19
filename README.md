@@ -18,7 +18,9 @@
 16. And yet easy to understand, again, depending on many factors.
 
 What are you waiting for?
-Visit  https://ulike123.com for now and get the free wild domain validation SSL free PS script.
+Visit  https://ulike123.com and get the free wild domain validation SSL free PS script or...
+Just get it from:
+https://github.com/ulike123/SSL/edit/Free-SSL-Posh-ACME-Module-User-Visual-Options/
 
 
 
