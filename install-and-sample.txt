@@ -3,6 +3,6 @@ Just a simple copy/paste file and run by clicking or PowerShell terminal.
 
 Sometimes it requires admin permessions depending on security settings set
 
-on the endfront.
+on the enduser device.
 
 
