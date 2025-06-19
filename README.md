@@ -16,11 +16,13 @@
 14. Before SSL options.
 15. After SSL options.
 16. And yet easy to understand, again, depending on many factors.
+17. Fixed email issue.
+18. Fixed SSL must-stable issue.
 
-What are you waiting for?
-Visit  https://ulike123.com and get the free wild domain validation SSL free PS script or...
-Just get it from:
-https://github.com/ulike123/SSL/edit/Free-SSL-Posh-ACME-Module-User-Visual-Options/
+Just copy/download it from:
+https://github.com/ulike123/SSL/edit/Free-SSL-Posh-ACME-Module-User-Visual-Options/Hello-Free-Wild-SSL.PS1
 
+Also available on:
+[https://ulike123.com/](https://ulike123.com/content.php?action=mypages&page=Hello-Free-Wild-SSL-PS1-ver-1-utility-for-Lets-Encrypt-SSL.html)
 
 
