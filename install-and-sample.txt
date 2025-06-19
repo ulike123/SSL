@@ -1,25 +1,8 @@
-/***********************************
-/* Released under the MIT license */
-/*
-/* ulike123 RTL auto-detect 2022.
-*/
 
-/***********************************
-/* Installation */
-/*
-/* Copy&Paste or require_once(this_code_as_page.php)
-*/
+Just a simple copy/paste file and run by clicking or PowerShell terminal.
 
-/***********************************
-/* Usage example/sample */
-/*
-/* <div dir="<?=@dir($sampleHTML_full_or_quote);?>">$sampleHTML</div>
-/* 
-/* $sampleHTML can be a hooked blog post content ex: WordPress:
-/*
-/* $some = @get_the_content( 'Read more' );
-/* $content = @apply_filters( 'the_content', get_the_content() );
-/* <div dir="<?=@dir($some);?>">$content</div>
-/*
-/* See function get_the_content() >> https://developer.wordpress.org/reference/functions/get_the_content/
-*/
+Sometimes it requires admin permessions depending on security settings set
+
+on the endfront.
+
+
