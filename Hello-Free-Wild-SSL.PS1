@@ -22,6 +22,7 @@ $script:MsgCheck   = "Something went wrong! You may start over this process!";
 $script:MsgSkipErr = "Type [S] to start over or any to exit script and press [Enter]...";
 $script:SSLPKSAME  = "Same Private Key";
 $script:SSLPKNEW   = "New Private Key";
+$script:AFF        = " $RT - Type [V] to visit(new affiliation window) the website yourself, or... $NL - any to end paging and press [Enter]... $RT ";
 $script:LNK        = " $RT - Type [V] to visit(new window) the website yourself, or... $NL - any to end paging and press [Enter]... $RT ";
 $script:CRT        =
 "
@@ -507,10 +508,10 @@ function NewSetAccount
     GoNext -title "New/Set $USER -> Help & TOS" -msg $txt;
 
     # Authority & Mode
-    if(-not $script:authority)
+    if(-not $script:authority -or $modes -ieq "ZEROSSL_PROD")
     {
         # Input = server
-        $authorities = "1. LetsEncrypt Staging *", "2. LetsEncrypt Production *", "3. BuyPass.com Testing **", "4. BuyPass.com Production **", "5. Zerossl.com Production **";
+        $authorities = "1. LetsEncrypt Staging *", "2. LetsEncrypt Production *", "3. BuyPass.com Testing **", "4. BuyPass.com Production **", "5. Zerossl.com Production ***";
         $modes = "LE_STAGE", "LE_PROD", "BUYPASS_TEST", "BUYPASS_PROD", "ZEROSSL_PROD";
         $txt = " - Type the option number and press [Enter]...";
         $txt+= "$NL ";
@@ -518,10 +519,11 @@ function NewSetAccount
         $txt+=
         "
  __________________________________________________________________
- *    means wild domain validation(DV) SSL.
- **   means simple domain SSL(up to 5 subdomains) and...
- ***  this script only sets the default(www) and if contact...
- **** is required, sets the default(webmaster@the_domain_you_> Type).
+ *   means wild domain validation(DV) SSL and no email.
+ **  means simple domain SSL(up to 5 subdomains) and...
+ **  this script only sets the default(www) and if contact...
+ **  is required, sets the default(webmaster@the_domain_you_> Type).
+ *** means same as 3-4 but with external credentials requirements.
         ";
 
         # Next >>>
@@ -544,7 +546,7 @@ function NewSetAccount
                 Write-Host "Visiting ZeroSSL page ?";
                 
                 # Hold action for a while waiting for User action
-                $ret = Read-Host $LNK;
+                $ret = Read-Host $AFF;
 
                 # check User action
                 if($ret -ieq "v")
@@ -1420,6 +1422,7 @@ $MsgConfirm";
 
 ### Start Script
 Hello-Free-Wild-SSL-PS1-By-Ulike123;
+
 ### Hold action for a while after breaking main while cycle...
 Read-Host " $RT Press [Enter] to leave... $RT ";
 
