@@ -1,7 +1,6 @@
-
 ##########################################################################
 #                                                                        #
-# Hello-Free-Wild-SSL.PS1, ver 1.0.0, a utility for Let's Encrypt DV SSL #
+# Hello-Free-Wild-SSL.PS1, ver 2.0.0, a utility for Let's Encrypt DV SSL #
 #                                                                        #
 ##########################################################################
 
@@ -248,11 +247,11 @@ function StartOver([int]$flg=0, [string]$msg="")
     Write-Host $ZGU;
     if($script:connec -ieq $false)
     {
-    Write-Host "   Hello-Free-Wild-SSL.PS1, ver 1.0.0, a utility for Let's Encrypt DV SSL.    " -ForegroundColor Black -BackgroundColor DarkGreen;
+    Write-Host "   Hello-Free-Wild-SSL.PS1, ver 2.0.0, a utility for Let's Encrypt DV SSL.    " -ForegroundColor Black -BackgroundColor DarkGreen;
     }
     else
     {
-    Write-Host "   Hello-Free-Wild-SSL.PS1, ver 1.0.0, a utility for Let's Encrypt DV SSL.    " -ForegroundColor Black -BackgroundColor Green;
+    Write-Host "   Hello-Free-Wild-SSL.PS1, ver 2.0.0, a utility for Let's Encrypt DV SSL.    " -ForegroundColor Black -BackgroundColor Green;
     }
     Write-Host $ZGD;
     Write-Host "  \                                                                        /";
@@ -448,7 +447,7 @@ function GoNext
                 if($inp -imatch $exp){ $cnd = 0; }
             }
 
-            # Msg Flags = 3 - >>> User input Required as Option (e.g. confirm, etc)
+            # Msg Flags = 3 - >>> User input Required as Option (e.g. confirm, etc.)
             if($flg -eq 3)
             {
                 # Input
@@ -465,7 +464,7 @@ function GoNext
                 if($inp -ieq "b"){ $inp = "B"; $cnd = 0;}
             }
 
-            # Msg Flags = 5 - >>> Header (e.g. Host-Out: text, print, file, etc)
+            # Msg Flags = 5 - >>> Header (e.g. Host-Out: text, print, file, etc.)
             if($flg -eq 5){ $inp = ""; $cnd = 0; }
 
             # locking <>
@@ -511,7 +510,7 @@ function NewSetAccount
     if(-not $script:authority -or $modes -ieq "ZEROSSL_PROD")
     {
         # Input = server
-        $authorities = "1. LetsEncrypt Staging *", "2. LetsEncrypt Production *", "3. BuyPass.com Testing **", "4. BuyPass.com Production **", "5. Zerossl.com Production ***";
+        $authorities = "1. Let's Encrypt Staging *", "2. Let's Encrypt Production *", "3. Buypass.com Testing **", "4. Buypass.com Production **", "5. ZeroSSL.com Production ***";
         $modes = "LE_STAGE", "LE_PROD", "BUYPASS_TEST", "BUYPASS_PROD", "ZEROSSL_PROD";
         $txt = " - Type the option number and press [Enter]...";
         $txt+= "$NL ";
@@ -519,11 +518,11 @@ function NewSetAccount
         $txt+=
         "
  __________________________________________________________________
- *   means wild domain validation(DV) SSL and no email.
- **  means simple domain SSL(up to 5 subdomains) and...
+ *   This means wild domain validation(DV) SSL and no email.
+ **  This means simple domain SSL(up to 5 subdomains) and...
  **  this script only sets the default(www) and if contact...
  **  is required, sets the default(webmaster@the_domain_you_> Type).
- *** means same as 3-4 but with external credentials requirements.
+ *** This means same as 3-4 but with external credentials requirements.
         ";
 
         # Next >>>
@@ -899,7 +898,7 @@ function NewRenewSSL
         $OK = 0;
 
         #
-        # 1. CHECK FOR RENEWAL and don't use -Force unless renewing a Miscellaneous case found(e.g range(30-59 days) aged SSL force renew etc) ***
+        # 1. CHECK FOR RENEWAL and don't use -Force unless renewing a Miscellaneous case found(e.g. 30-59 days SSL, and about to be forced to renew etc.) ***
         #
         if($status -imatch "\b(VALID)" -or $renewAfter -ne $null)
         {
@@ -1003,7 +1002,7 @@ function NewRenewSSL
             }
         }
         #
-        # 2. CHECK FOR OTHERS(e.g null(nonexistent), pending, invalid, unknown etc) and use -Force ***
+        # 2. CHECK FOR OTHERS(e.g. null(nonexistent), pending, invalid, unknown etc.) and use -Force ***
         #
         else
         {
@@ -1217,7 +1216,7 @@ function Legal
 
     # Input = Back[B]
     $txt =
-"- This Script  :  Hello-Free-Wild-SSL.PS1, ver 1.0.0.
+"- This Script  :  Hello-Free-Wild-SSL.PS1, ver 2.0.0.
 - Use          :  getting a free Let's Encrypt wild DV SSL.
 - Developer    :  Al bunyan.
 - Website      :  https://ulike123.com/
