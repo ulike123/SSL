@@ -5,39 +5,36 @@
 ##########################################################################
 
 # script scope consts:
-$script:ZGU        = "  \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/  ";
-$script:ZGD        = "  /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\  ";
-$script:BAR        = "                                                                              ";
-$script:ABR        = "       < Press [Ctrl] + [C] to exit script or abort a process anytime >       ";
-$script:NL         = "`n";
-$script:RT         = "`r`n";
+$script:HED        = " Hello-Free-Wild-SSL.PS1, ver 2.0, a utility for Let's Encrypt DV SSL ";
+$script:FOT        = "                                                                      ";
+$script:ABR        = "   < Press [Ctrl] + [C] to exit script or abort a process anytime >   ";
+$script:RT         = "`r`n"; # portable line break style
 $script:SHW        =  300;
 $script:PRO        =  30;
 $script:AUT        =  600;
 $script:USER       = "Profile";
 $script:MsgOptIn   = "Firstly, create/choose the required $USER using option ""New/Set $USER"" !";
-$script:MsgConfirm = "Type [C] to confirm or any to exit and press [Enter]...";
+$script:MsgConfirm = "Type [C] to confirm or any to exit and press [Enter] to continue...";
 $script:MsgCheck   = "Something went wrong! You may start over this process!";
-$script:MsgSkipErr = "Type [S] to start over or any to exit script and press [Enter]...";
+$script:MsgSkipErr = "Type [S] to start over or any to exit script and press [Enter] to continue...";
 $script:SSLPKSAME  = "Same Private Key";
 $script:SSLPKNEW   = "New Private Key";
-$script:AFF        = " $RT - Type [V] to visit(new affiliation window) the website yourself, or... $NL - any to end paging and press [Enter]... $RT ";
-$script:LNK        = " $RT - Type [V] to visit(new window) the website yourself, or... $NL - any to end paging and press [Enter]... $RT ";
+$script:AFF        = "$RT - Type [V] to visit(new affiliation window) the website yourself, or... $RT - any to end paging and press [Enter] to continue...$RT";
+$script:LNK        = "$RT - Type [V] to visit(new window) the website yourself, or... $RT - any to end paging and press [Enter] to continue...$RT";
 $script:CRT        =
-"
-Sorry for this ""Workaround Help"", but sometimes: 
- - You may restart terminal/script and...
- - You may start new with/without a different $USER for the required domain or...
- - You may restart this process again after deleting/emptying/moving locally cached $USER folder!
-   * Sometimes you may need to clear all cached files under the cert(s) output directory
-     that can be found when looking for a folder. and start this process again...
-     See: Legal -> Extra...Links -> Posh...Save-To...Folder.
- - SSL got with older soft version(s) then with newer while there is some addons/drops also...
- - mostly needs a new start with a new $USER.
+" Sorry for this ""Workaround Help"", but rarely: 
+  - You may restart terminal/script as elevated root/admin PowerShell session and...
+  - You may start new with/without a different $USER for the required domain or...
+  - You may restart this process again after deleting/emptying/moving local $USER folder!
+    * Rarely, you may need to clear all files under the cert(s) output directory.
+      Then, start this process again!
+      See: Legal -> Extra...Links -> Posh...Save-To...Folder.
+  - SSL got with older script version(s) then with newer while there is some addons/drops also...
+  - It needs mostly a new start with a new $USER.
 
-       Kindly, press [Enter] to exit this script $RT 
+  Kindly, press [Enter] to exit this script!
 ";
-$script:BYE = " $NL Bye ! $NL ";
+$script:BYE = "$RT Bye! $RT";
 
 # script scope vars named after function or thread/task/step lock:
 $script:GetStatus              = $false;
@@ -111,8 +108,11 @@ function GetPoshACME
         # Next - Footer >>>
         GoNext -flg 6;
 
+        # Do some legacy thrice screen shaking after installment
         Write-Host $RT;
+        sleep -Milliseconds $PRO;
         Write-Host $RT;
+        sleep -Milliseconds $PRO;
         Write-Host $RT;
     }
     catch{ return $false; }
@@ -131,47 +131,54 @@ function GetInput
         [Parameter(Mandatory=$false, HelpMessage="-msg: Default = Press [Enter] to continue...")]
         [string]
         $msg = "Press [Enter] to continue...",
-        [Parameter(Mandatory=$false, HelpMessage="-style: 0 = White, 1 = Red, 2 = Yellow.")]
+        [Parameter(Mandatory=$false, HelpMessage="-style: 0 = White, 1 = Red, 2 = Yellow, 3 = DarkYellow, 4 = Cyan.")]
         [int]
         $style = 0
     );
-
+    
     # locking <>
     if($script:GetInput -eq $true){ return; }
     $script:GetInput = $true;
 
-    # Normal style as Default - White
+    # Normal style as 0. Default: White
     $clrFor = 15;
     $clrBkg = 15;
 
-    # Confirm style as Requied - Red
+    # Confirm style as 1. Required: Red
     if($style -eq 1)
     {
         $clrFor = 12;
         $clrBkg = 12;
     }
 
-    # Confirm style as Advisory - Yellow
+    # Confirm style as 2. Advisory: Yellow
     if($style -eq 2)
     {
         $clrFor = 14;
         $clrBkg = 14;
     }
 
-    # Confirm style as Inactive - DarkYellow
+    # Confirm style as 3. Inactive: DarkYellow
     if($style -eq 3)
     {
         $clrFor = 6;
         $clrBkg = 6;
     }
 
+    # Confirm style as 4. Required: Cyan
+    if($style -eq 4)
+    {
+        $clrFor = 11;
+        $clrBkg = 11;
+    }
+
     # color & lines
     Write-Host $RT  -NoNewline;
-    Write-Host $BAR -NoNewline -ForegroundColor $clrFor -BackgroundColor $clrBkg;
+    Write-Host $FOT -NoNewline -ForegroundColor $clrFor -BackgroundColor $clrBkg;
     Write-Host $RT  -NoNewline;
     Write-Host $ABR -NoNewline;
     Write-Host $RT  -NoNewline;
-    Write-Host $BAR -NoNewline -ForegroundColor $clrFor -BackgroundColor $clrBkg;
+    Write-Host $FOT -NoNewline -ForegroundColor $clrFor -BackgroundColor $clrBkg;
     Write-Host $RT  -NoNewline;
 
     # Wait...
@@ -201,24 +208,23 @@ function GetStatus
 
     # Connection & other checks
     try
-    {
+    {   # Collected [] tabs to status. They need extra starter $RT for string collection!
         $status = Get-Date;
-        $status = " [ Status ] $NL Last Checked: $status, Internet: ";
-        if((Test-Connection "1.1.1.1" -Quiet -Delay 1 -Count 1 -ErrorAction SilentlyContinue) -ieq $true)
-        { $script:connec = $true; $status += "Connected.$NL" } else { $script:connec = $false; $status += "Disconnected.$NL" }
-        $status +="$NL [ Settings ] 
+        $status = "[ Status ] $RT Last Checked: $status, Internet:";
+        if((Test-Connection "8.8.8.8" -Quiet -Delay 1 -Count 1 -ErrorAction SilentlyContinue) -ieq $true)
+        { $script:connec = $true; $status += "Connected!" } else { $script:connec = $false; $status += "Disconnected!" }
+        $status +="$RT$RT[ Settings ] 
  Authority & Mode: $script:authority
  SSL Key: $script:sslpkey
  Domain: $script:domain
  Alias(SANs): $script:alias
  $USER ID: $script:id
- Files Folder: $script:folder
-$NL ";
+ Files Folder: $script:folder";
     }
     catch
     {
         $script:connec = $false;
-        $script:status = " [ Status ] $NL Error: Unknown!";
+        $script:status = "$RT$RT[ Status ] $RT Error: Unknown!";
     }
 
     # locking <>
@@ -242,39 +248,46 @@ function StartOver([int]$flg=0, [string]$msg="")
     # Status
     $script:status = GetStatus;
     
-    Write-Host $NL -NoNewline;
-    Write-Host "  /                                                                        \";
-    Write-Host $ZGU;
+    # Screen "0,0 Top Left"
+    Write-Host $RT -NoNewline;
+
+    # Hello header
     if($script:connec -ieq $false)
-    {
-    Write-Host "   Hello-Free-Wild-SSL.PS1, ver 2.0.0, a utility for Let's Encrypt DV SSL.    " -ForegroundColor Black -BackgroundColor DarkGreen;
-    }
-    else
-    {
-    Write-Host "   Hello-Free-Wild-SSL.PS1, ver 2.0.0, a utility for Let's Encrypt DV SSL.    " -ForegroundColor Black -BackgroundColor Green;
-    }
-    Write-Host $ZGD;
-    Write-Host "  \                                                                        /";
-    Write-Host $NL -NoNewline;
+    { Write-Host $HED -NoNewline -ForegroundColor Black -BackgroundColor DarkGreen; }
+    else{ Write-Host $HED -NoNewline -ForegroundColor Black -BackgroundColor Green; }
+
+    # Header's footer
+    Write-Host $RT  -NoNewline;
+    Write-Host $FOT -NoNewline -ForegroundColor 15 -BackgroundColor 15;
+    Write-Host $RT  -NoNewline;
+
+    # Header's tabs [] preceding title
     Write-Host $script:status;
 
-    $thend = " The Script Ended ! ";
+    # Quick status screen redrawing/refreshing...
+    $thend =
+"
+[The End]
 
-    if($flg -eq 1){ Write-Host " Loading... "; }
-    if($flg -eq 2){ Write-Host " Starting over... "; }
-    if($flg -eq 3){ Write-Host " Processing... "; }
-    if($flg -eq 4){ Write-Host " Fitching... "; }
-    if($flg -eq 5){ Write-Host   $thend; }
+ The Script Ended !";
 
-    # Wait...
+    if($flg -eq 1){ Write-Host "$RT Loading..."; }
+    if($flg -eq 2){ Write-Host "$RT Starting over..."; }
+    if($flg -eq 3){ Write-Host "$RT Processing..."; }
+    if($flg -eq 4){ Write-Host "$RT Fetching..."; }
+    if($flg -eq 5){ Write-Host "$RT $thend"; }
+
+    # Wait
     if($flg -ne 0)
-    { sleep -Milliseconds $SHW; } else { sleep -Milliseconds $PRO; }
+    { sleep -Milliseconds $AUT; } else { sleep -Milliseconds $SHW; }
+    # Quick status end...
 
-    # Show msg only after Bye !
+    # Show msg only after a Bye!
     if($flg -eq 5 -and $msg -ne $null -and $msg -ne "")
     {
+        # Cool exit; script(ex: settings) still copyable from screen!
         Write-Host $RT;
-        Write-Host $msg; # $BYE !
+        Write-Host $msg; # different types of Bye!
         Write-Host $RT;
     }
     else
@@ -282,7 +295,7 @@ function StartOver([int]$flg=0, [string]$msg="")
         # Connection check
         if($script:connec -ieq $false)
         {
-            $MsgDebug = "Type [R] to refresh connection or any to exit script and press [Enter]...";
+            $MsgDebug = "Type [R] to refresh connection or any to exit script and press [Enter] to continue...";
 
             # Input
             $inp = GetInput -msg $MsgDebug -style 3;
@@ -297,12 +310,13 @@ function StartOver([int]$flg=0, [string]$msg="")
             }
             else
             {
-                # Bye !
+                # Hot exit; script(ex: settings) won't be copyable from screen!
                 Clear-Host;
                 clear;
                 cls;
                 
-                Write-Host $RT;
+                # Screen "0,0 Top Left" again
+                Write-Host $RT -NoNewline;;
                 Write-Host $thend;
                 
                 # wait...
@@ -333,7 +347,7 @@ function GoNext
         [Parameter(Mandatory=$false, HelpMessage="-exp: Default = B")]
         [string]
         $exp = "B",
-        [Parameter(Mandatory=$false, HelpMessage="flg: 0 = Continue, 1 = Start, 2 = Validation, 3 = Option, 4 = Advisory, 5 = Header, 6 = Footer")]
+        [Parameter(Mandatory=$false, HelpMessage="flg: 0 = Press any to continue, 1 = Start, 2 = Red Validation, 3 = Red Option, 4 = Yellow Advisory, 5 = Header, 6 = Footer, 7 = Cyan Validation")]
         [int]
         $flg = 0
     );
@@ -342,25 +356,19 @@ function GoNext
     if($script:GoNext0 -eq $true){ return; }
     $script:GoNext0 = $true;
 
-    # User input txt
-    $inp = "";
-
-    # Msgs
-    $MsgOption = "Type one of the Options Menu numbers and press [Enter]...";
-    $MsgUIExp  = "Type the required text & press [Enter]...";
-    $MsgNext   = "Press [Enter] to continue...";
-    $MsgBack   = "Type [B] and press [Enter] to go back...";
-
+    # Msg common next >>>
+    $MsgNext = "Press [Enter] to continue...";
+    
     # Msg Flags = 6 - >>> Footer >>> Press [Enter] to continue >>>
     if($flg -eq 6)
     {
-        Write-Host " $RT       << paging of function output ened >> $RT ";
+        Write-Host "$RT                 << paging of function output ended >>";
 
         # wait...
         sleep -Milliseconds $SHW;
 
-        # Input
-        $inp = GetInput -msg $MsgNext;
+        # Input None - Just a press for next >>>
+        GetInput -msg $MsgNext;
 
         # wait...
         sleep -Milliseconds $AUT;
@@ -372,7 +380,15 @@ function GoNext
         return;
     }
 
-    # Msg Flags 1 -  >>> Normal >>> User text with [Enter] for Options Menu >>>
+    # User input txt
+    $inp = "";
+
+    # Msgs
+    $MsgOption = "Type one of the Options Menu numbers and press [Enter] to continue...";
+    $MsgUIExp  = "Type the required text & press [Enter] to continue...";
+    $MsgBack   = "Type [B] and press [Enter] to go back!";
+
+    # Msg Flags: 1, Options Menu >>>
     if($flg -eq 1)
     {
         # New Screen -> Blank >>>
@@ -380,16 +396,16 @@ function GoNext
 
         # Options #
         # Title
-        Write-Host " [ Title ] $NL Options Menu $NL";
+        Write-Host "$RT[ Title ] $RT Options Menu";
         # Text
-        Write-Host " [ Content ] $RT";
-        Write-Host "1. New/Set $USER";
-        Write-Host "2. Clear Current Cached Settings";
-        Write-Host "3. New/Renew SSL";
-        Write-Host "4. Domain check";
-        Write-Host "5. Help";
-        Write-Host "6. Legal";
-        Write-Host "7. Exit";
+        Write-Host "$RT[ Content ] ";
+        Write-Host " 1. New/Set $USER";
+        Write-Host " 2. Clear [ Settings ]";
+        Write-Host " 3. New/Renew SSL";
+        Write-Host " 4. Domain check";
+        Write-Host " 5. Help";
+        Write-Host " 6. Legal";
+        Write-Host " 7. Exit";
 
         # Input = Number
         $inp = GetInput -msg $MsgOption;
@@ -406,18 +422,18 @@ function GoNext
             if($script:GoNext1 -eq $true){ continue; }
             $script:GoNext1 = $true;
 
-            # New Screen -> Blank >>>
+            # New Screen ->>>
             StartOver;
 
             # Title
-            Write-Host " [ Title ] $NL $title $NL";
+            Write-Host "$RT[ Title ] $RT $title";
             # Text
-            Write-Host " [ Content ] $RT";
+            Write-Host "$RT[ Content ] ";
             if($msg -ne $null -and $msg -ne "")
             {
                 if($msg.GetType().Name -imatch "\b(String)")
                 {
-                    try{ Write-Host $msg -WarningAction SilentlyContinue -ErrorAction SilentlyContinue }catch{};
+                    try{ Write-Host "$RT$msg" -WarningAction SilentlyContinue -ErrorAction SilentlyContinue }catch{};
                 }
                 else
                 {
@@ -426,19 +442,19 @@ function GoNext
             }
             else
             {
-                # if not Header 5 ->>>
-                if($flg -ne 5){ Write-Host "A backend process has finished."; }
+                # if flg not 5. Header ->>>
+                if($flg -ne 5){ Write-Host "$RT A backend process has finished."; }
             }
 
-            # Msg Flags = [ 0/null/>=size ] - >>> Normal >>> Press [Enter] to continue >>>
-            if($flg -eq 0 -or $flg -eq $null -or $flg -ge 7)
+            # Msg Flags: [ 0/null/>=size ], Normal, Press [Enter] to continue >>>
+            if($flg -eq 0 -or $flg -eq $null -or $flg -ge 8)
             {
-                # Input
-                $inp = GetInput -msg $MsgNext;
+                # Input None - Just a press for next >>>
+                GetInput -msg $MsgNext;
                 $cnd = 0;
             }
 
-            # Msg Flags = 2 - >>> User input Required as Valid (e.g. email, domain)
+            # Msg Flags: 2, User input required as red validation (ex: domain, etc.)
             if($flg -eq 2)
             {
                 # Input
@@ -447,7 +463,7 @@ function GoNext
                 if($inp -imatch $exp){ $cnd = 0; }
             }
 
-            # Msg Flags = 3 - >>> User input Required as Option (e.g. confirm, etc.)
+            # Msg Flags: 3, User input required as red option (ex: confirm, etc.)
             if($flg -eq 3)
             {
                 # Input
@@ -455,7 +471,7 @@ function GoNext
                 $cnd = 0;
             }
 
-            # Msg Flags = 4 - >>> Advisory (e.g. Back)
+            # Msg Flags: 4, Yellow Advisory(Back)
             if($flg -eq 4)
             {
                 # Input
@@ -464,8 +480,17 @@ function GoNext
                 if($inp -ieq "b"){ $inp = "B"; $cnd = 0;}
             }
 
-            # Msg Flags = 5 - >>> Header (e.g. Host-Out: text, print, file, etc.)
+            # Msg Flags: 5, Header (ex: to preview functions outputs and objects, etc.)
             if($flg -eq 5){ $inp = ""; $cnd = 0; }
+
+            # Msg Flags: 7, User input required as cyan validation (ex: domain, etc.)
+            if($flg -eq 7)
+            {
+                # Input
+                $inp = GetInput -msg $MsgUIExp -style 4;
+                # validate...
+                if($inp -imatch $exp){ $cnd = 0; }
+            }
 
             # locking <>
             $script:GoNext1 = $false;
@@ -495,7 +520,7 @@ function NewSetAccount
   3. Choose $USER or create new if there is no $USER or to solve...
   4. Issues like using old app(s) and then new app(s) with updates/drops.
   5. After choosing the required $USER, option ""New/Renew SSL"" is your next.
-  6. Type [S] to strat over if such instructs you with same option number.
+  6. Type [S] to start over if such instructs you with same option number.
   7. A rare issue, may be cleaning history files.
      See: Legal -> Extra...Links -> Posh...Save-To...Folder
  
@@ -512,18 +537,18 @@ function NewSetAccount
         # Input = server
         $authorities = "1. Let's Encrypt Staging *", "2. Let's Encrypt Production *", "3. Buypass.com Testing **", "4. Buypass.com Production **", "5. ZeroSSL.com Production ***";
         $modes = "LE_STAGE", "LE_PROD", "BUYPASS_TEST", "BUYPASS_PROD", "ZEROSSL_PROD";
-        $txt = " - Type the option number and press [Enter]...";
-        $txt+= "$NL ";
-        $txt+= $authorities -join $NL+" ";
+        $txt = " Type one of the following options number and press [Enter]:";
+        $txt+= "$RT ";
+        $txt+= $authorities -join $RT+" ";
         $txt+=
-        "
+"
  __________________________________________________________________
  *   This means wild domain validation(DV) SSL and no email.
  **  This means simple domain SSL(up to 5 subdomains) and...
  **  this script only sets the default(www) and if contact...
  **  is required, sets the default(webmaster@the_domain_you_> Type).
  *** This means same as 3-4 but with external credentials requirements.
-        ";
+";
 
         # Next >>>
         $ret = GoNext -title "New/Set $USER -> Authority & Mode" -msg $txt -exp "^[1-5]{1}$" -flg 2;
@@ -558,7 +583,7 @@ function NewSetAccount
             GoNext -flg 6;
 
             # Next >>>
-            GoNext -title "New/Set $USER -> Authority & Mode -> Result" -msg " - All, cancelled! $NL - Kindly, visit Authority page!" -flg 4;
+            GoNext -title "New/Set $USER -> Authority & Mode -> Result" -msg " - All canceled! $RT - Kindly, visit Authority page!" -flg 4;
 
             # locking <>
             $script:NewSetAccount = $false;
@@ -574,7 +599,7 @@ function NewSetAccount
         # Input = domain
         $txt = "^([\w-]+\.)+[\w-]{1,}$";
         # Next >>>
-        $tmp = GoNext -title "New/Set $USER -> Domain" -msg "Enter a valid domain(e.g example.com)" -exp $txt -flg 2;
+        $tmp = GoNext -title "New/Set $USER -> Domain" -msg "Enter a valid domain(ex: example.com)" -exp $txt -flg 2;
 
         # Domain
         $script:domain =  $tmp.Trim();
@@ -584,11 +609,13 @@ function NewSetAccount
     }
 
     # Input = Confirmation
-    $txt = 
-"Are you sure to continue with the following main settings: $NL
-    - Authority & Mode: $script:authority $NL
-    - Domain: $script:domain $RT
-    $MsgConfirm";
+    $txt =
+" Are you sure to continue with the following main settings:
+  - Authority & Mode: $script:authority
+  - Domain: $script:domain
+
+ $MsgConfirm
+";
 
     # Next >>>
     $ret = GoNext -title "New/Set $USER -> Confirmation" -msg $txt -flg 3;
@@ -624,9 +651,9 @@ function NewSetAccount
 
                 # Alert!
                 if($ret)
-                { Write-Host " $RT       Kindly, copy a preferred ID from list for next step! $NL " -ErrorAction SilentlyContinue; }
+                { Write-Host "$RT Kindly, copy a preferred ID from list for next step! $RT" -ErrorAction SilentlyContinue; }
                 else
-                { Write-Host " $RT       No $USER(s) found! $NL " -ErrorAction SilentlyContinue; }
+                { Write-Host "$RT No $USER(s) found! $RT" -ErrorAction SilentlyContinue; }
 
             # Next - Footer >>>
             GoNext -flg 6;
@@ -639,7 +666,7 @@ function NewSetAccount
                 # Input = one listed profile
                 $txt = '^(\w+|[^\s\/\\\<\>\"\|\?\:\*]+)$';
                 # Next >>>
-                $idx = GoNext -title "New/Set $USER -> Get-PAAccount -> $USER" -msg " - Enter a valid $USER from previously listed or... $NL - zero(nonexistent) to start new and press [Enter]..." -exp $txt -flg 2;
+                $idx = GoNext -title "New/Set $USER -> Get-PAAccount -> $USER" -msg " - Enter a valid $USER from previously listed or... $RT - zero(nonexistent) to start new and press [Enter] to continue..." -exp $txt -flg 2;
 
                 # Next - Header >>>
                 GoNext -title "New/Set $USER -> Get-PAAccount -> $USER($idx)" -flg 5;
@@ -648,8 +675,8 @@ function NewSetAccount
                     $ret = Get-PAAccount -ID $idx -Refresh;
 
                     # Paging...
-                    if(-not $ret){ Write-Host " $NL Couldn't Find $USER($idx) ! $NL "; }
-                    else{ Write-Host " $NL $USER($idx) has been chosen! $NL "; }
+                    if(-not $ret){ Write-Host "$RT Couldn't Find $USER($idx) ! $RT"; }
+                    else{ Write-Host "$RT $USER($idx) has been chosen! $RT"; }
 
                 # Next - Footer >>>
                 GoNext -flg 6;
@@ -667,7 +694,7 @@ function NewSetAccount
             if(-not $ret)
             {
                 # Next >>>
-                $ret = GoNext -title "New/Set $USER -> Get-PAAccount -> Couldn't Find $USER(s) !" -msg " - Type [Y] to create a new $USER with new id or... $NL - or any to start over and press [Enter]..." -flg 3;
+                $ret = GoNext -title "New/Set $USER -> Get-PAAccount -> Couldn't Find $USER(s) !" -msg " - Type [Y] to create a new $USER with new id or... $RT - or any to start over and press [Enter] to continue..." -flg 3;
                 
                 # Set Server
                 if($ret -ieq "y")
@@ -694,7 +721,7 @@ function NewSetAccount
                 else
                 {
                     # Next >>>
-                    GoNext -title "New/Set $USER -> Get-PAAccount -> Result" -msg " - All, cancelled!" -flg 4;
+                    GoNext -title "New/Set $USER -> Get-PAAccount -> Result" -msg "All canceled!" -flg 4;
                     
                     # locking <>
                     $script:NewSetAccount = $false;
@@ -737,7 +764,7 @@ function NewSetAccount
                 }
                 else # $USER
                 {
-                    $txt = " - $USER is found with the status($status). $NL $CRT";
+                    $txt = "$USER is found with the status($status). $RT$CRT";
                     # Next >>>
                     GoNext -title "New/Set $USER -> $USER(3) -> Error" -msg $txt -flg 4;
 
@@ -751,7 +778,7 @@ function NewSetAccount
             else # $USER
             {
                 # Next >>>
-                GoNext -title "New/Set $USER -> $USER(1) -> Error" -msg " - Failed setting a $USER! $NL - You may restart setting a $USER again!" -flg 4;
+                GoNext -title "New/Set $USER -> $USER(1) -> Error" -msg " - Failed setting a $USER! $RT - You may restart setting a $USER again!" -flg 4;
 
                 # Next >>>
                 $ret = GoNext -title "New/Set $USER -> $USER(2) -> Error" -msg $MsgSkipErr -flg 3;
@@ -763,7 +790,7 @@ function NewSetAccount
         else # Confirmation
         {
             # Next >>>
-            GoNext -title "New/Set $USER -> Confirmation -> Result" -msg " - All, cancelled!" -flg 4;
+            GoNext -title "New/Set $USER -> Confirmation -> Result" -msg "All canceled!" -flg 4;
 
             # DO NOTHING...
             # $script:step = $script:step = ini or same previous User inputs...
@@ -772,7 +799,7 @@ function NewSetAccount
     catch # Function
     {
         # Next >>>
-        GoNext -title "New/Set $USER -> Error" -msg "$MsgCheck $RT + Last Error: $RT - $NL$_ $RT - Domain: $script:domain" -flg 4;
+        GoNext -title "New/Set $USER -> Error" -msg "$MsgCheck $RT + Last Error: $RT - $RT $_ $RT - Domain: $script:domain" -flg 4;
 
         # Next - Confirmation >>>
         $ret = GoNext -title "New/Set $USER -> Error" -msg $MsgSkipErr -flg 3;
@@ -842,11 +869,11 @@ function NewRenewSSL
    5. After choosing the required SSL option, TXTs authorization is required.
    6. Do the job of authorization and a press to wait for it.
    7. Some issues may come out so...
-   8. Type [S] to strat over if such instructs you with same option number.
+   8. Type [S] to start over if such instructs you with same option number.
    9. A rare issue, may be cleaning history files.
       See: Legal -> Extra...Links -> Posh...Save-To...Folder
   10. Clean TXTs records then...
-  11. Copy/Paste files from [ Settings ] -> Folder to your host SSL frontend.
+  11. Copy/Paste files from ""[ Settings ] -> Folder"" to your host SSL frontend.
   12. Wait 24-72 hours for SSL to propagate.
   13. ""Domain check"" option may help you both before/after ""New/Renew SSL"".
  
@@ -875,7 +902,7 @@ function NewRenewSSL
             }
         }
 
-        # Get Auths
+        # Get Authorization
         $auths = $null;
         if($order -ne $null){ $auths = $order | Get-PAAuthorization; }
 
@@ -889,16 +916,18 @@ function NewRenewSSL
 
         # Input = Confirmation
     $txt = 
-"Are you sure to continue with the following main settings: $NL
-    - Authority & Mode: $script:authority $NL
-    - Domain: $script:domain $RT
-    $MsgConfirm";
+" Are you sure to continue with the following main settings:
+  - Authority & Mode: $script:authority
+  - Domain: $script:domain
+
+ $MsgConfirm
+";
 
         # Result
         $OK = 0;
 
         #
-        # 1. CHECK FOR RENEWAL and don't use -Force unless renewing a Miscellaneous case found(e.g. 30-59 days SSL, and about to be forced to renew etc.) ***
+        # 1. CHECK FOR RENEWAL and don't use -Force unless renewing a Miscellaneous case found(ex: 30-59 days SSL, and about to be forced to renew etc.) ***
         #
         if($status -imatch "\b(VALID)" -or $renewAfter -ne $null)
         {
@@ -943,7 +972,7 @@ function NewRenewSSL
                     GoNext -title "New/Renew SSL -> Renew -> Default -> Result" -msg $ret;
 
                     # Next >>>
-                    GoNext -title "New/Renew SSL -> Renew -> Default -> Result" -msg "SSL(Default) is expectedly renewed successfully!" -flg 4;
+                    GoNext -title "New/Renew SSL -> Renew -> Default -> Result" -msg "SSL default renewal process is expectedly successful!" -flg 4;
 
                     # PASS !!!
                     $OK = 1;
@@ -993,7 +1022,7 @@ function NewRenewSSL
                         GoNext -title "New/Renew SSL -> Renew -> Miscellaneous -> Result" -msg $ret;
 
                         # Next >>>
-                        GoNext -title "New/Renew SSL -> Renew -> Miscellaneous -> Result" -msg "Miscellaneous issue is expectedly resolved successfully!" -flg 4;
+                        GoNext -title "New/Renew SSL -> Renew -> Miscellaneous -> Result" -msg "SSL miscellaneous issue is expectedly resolved successfully!" -flg 4;
 
                         # PASS !!!
                         $OK = 1;
@@ -1002,7 +1031,7 @@ function NewRenewSSL
             }
         }
         #
-        # 2. CHECK FOR OTHERS(e.g. null(nonexistent), pending, invalid, unknown etc.) and use -Force ***
+        # 2. CHECK FOR OTHERS(ex: null(nonexistent), pending, invalid, unknown etc.) and use -Force ***
         #
         else
         {
@@ -1046,7 +1075,7 @@ function NewRenewSSL
                 GoNext -title "New/Renew SSL -> New -> Result" -msg $ret;
 
                 # Next >>>
-                GoNext -title "New/Renew SSL -> New -> Result" -msg "SSL is expectedly created successfully!" -flg 4;
+                GoNext -title "New/Renew SSL -> New -> Result" -msg "SSL is expectedly created as new successfully!" -flg 4;
 
                 # PASS !!!
                 $OK = 1;
@@ -1061,13 +1090,13 @@ function NewRenewSSL
         else
         {
             # Next >>>
-            GoNext -title "New/Renew SSL -> All Result" -msg " - All, cancelled!";
+            GoNext -title "New/Renew SSL -> All Result" -msg "All canceled!";
         }
     }
     catch
     {
         # Next >>>
-        GoNext -title "New/Renew SSL -> Error" -msg "$MsgCheck $RT + Last Error: $RT - $NL$_ $RT - Domain: $script:domain" -flg 4;
+        GoNext -title "New/Renew SSL -> Error" -msg "$MsgCheck $RT + Last Error: $RT - $RT $_ $RT - Domain: $script:domain" -flg 4;
 
         # Next - Confirmation >>>
         $ret = GoNext -title "New/Renew SSL -> Error" -msg $MsgSkipErr -flg 3;
@@ -1094,22 +1123,44 @@ function TestSSLConnection
     if($script:TestSSLConnection -eq $true){ return; }
     $script:TestSSLConnection = $true;
 
+    $res = @{
+        code = '';
+        body = '';
+    };
+
     try
     {
-        $Response = Invoke-WebRequest -Uri $URL `
+        $response = Invoke-WebRequest -Uri $URL `
                                       -UseBasicParsing `
                                       -TimeoutSec 10 `
                                       -WarningAction SilentlyContinue `
                                       -ErrorAction SilentlyContinue;
-        $StatusCode = $Response.StatusCode.ToString().Trim();
-        if($StatusCode -imatch "2[0-9]{1}[0-9]{1}"){ $StatusCode = 200; }
-    }
-    catch{ $StatusCode = 9999; }
+        $code = $response.StatusCode.ToString().Trim();
+        if($code -imatch "2[0-9]{1}[0-9]{1}")
+        {
+            $res['code'] = 1;
+
+            $servicePoint = [System.Net.ServicePointManager]::FindServicePoint($response.BaseResponse.ResponseUri);
+            $certificate = $servicePoint.Certificate;
+
+            if($certificate)
+            {
+                $res['code'] = 2; # just extra test pass level since no error running a .NET object
+                $res['body'] = " Website      : $URL$RT";
+                $res['body']+= " Subject      : " + $certificate.Subject + $RT;
+                $res['body']+= " SSL Issuer   : " + $certificate.Issuer + $RT;
+                $res['body']+= " Issued       : " + [DateTime]$certificate.GetEffectiveDateString() + $RT;
+                $res['body']+= " Expires      : " + [DateTime]$certificate.GetExpirationDateString() + $RT;
+                $res['body']+= " SerialNumber : " + $certificate.GetSerialNumberString() + $RT;
+                $res['body']+= " Thumbprint   : " + $certificate.GetCertHashString();
+            }
+        }
+    }catch{}
 
     # locking <>
     $script:TestSSLConnection = $false;
 
-    return $StatusCode;
+    return $res;
 }
 
 #######################################################################
@@ -1119,42 +1170,39 @@ function DomainCheck
     if($script:DomainCheck -eq $true){ return; }
     $script:DomainCheck = $true;
 
-    # User check
-    if($script:step -ne 2)
-    {
-        # Next >>>
-        GoNext -title "Check Domain -> Settings Error" -msg $MsgOptIn -flg 4;
-
-        # locking <>
-        $script:DomainCheck = $false;
-
-        # exit
-        return;
-    }
+    # Input = domain
+    $txt = "^([\w-]+\.)+[\w-]{1,}$";
+    # Next >>>
+    $site = GoNext -title "Domain check -> Domain" -msg "Enter a valid TLD domain(ex: example.com) or a subdomain(ex: www.example.com)" -exp $txt -flg 7;
+    
+    # function's local scope global result placeholder param
+    $ret = $null;
 
     # Connection & other checks
     try
     {
         # Next - Header >>
-        GoNext -title "Check Domain -> Waiting 10 seconds for secure connection response..." -flg 5;
+        GoNext -title "Domain check -> Waiting up to 10 seconds for secure connection response..." -flg 5;
 
         # Test
-        $ret = TestSSLConnection -URL "https://$script:domain";
-        if($ret -ieq "200")
-        { Write-Host "Mostly, SSL is fine. No more action is required!"; }
+        $ret = TestSSLConnection -URL "https://$site";
+        if($ret['code'] -ieq "1")
+        { Write-Host "$RT Mostly, SSL is fine. No more action is required!"; }
+        elseif($ret['code'] -ieq "2")
+        { Write-Host $ret['body']; }
         else
         {
             # verbose that SSL is not fine
-            Write-Host "Mostly, SSL is not fine!";
+            Write-Host "$RT Mostly, SSL is not fine! Make sure you uploaded the SSL files exactly for ""$site"".";
             
             # Hold action for a while waiting for User action
             $ret = Read-Host $LNK;
 
             # check User action
-            if($ret -ieq "y")
+            if($ret -ieq "v")
             {
                 # Check current domain yourself
-                Start-Process -FilePath "https://$script:domain";
+                Start-Process -FilePath "https://$site";
             }
         }
 
@@ -1163,11 +1211,19 @@ function DomainCheck
     }
     catch
     {
+        # SSL
+        if($ret)
+        { Write-Host "$RT Mostly, SSL is fine. No more action is required!"; }
+        else{ Write-Host "$RT Mostly, SSL is not fine! Make sure you uploaded the SSL files exactly for ""$site""."; }
+
+        # .NET
+        Write-Host "$RT It seems a .NET collection is missing! May be a .NET reinstall solve that.";
+
         # Next >>>
-        GoNext -title "Check Domain -> Error" -msg "$MsgCheck $RT + Last Error: $RT - $NL$_ $RT - Domain: $script:domain" -flg 4;
+        GoNext -title "Domain check -> Error" -msg "$MsgCheck $RT + Last Error: $RT - $RT $_ $RT - Domain: $script:domain" -flg 4;
 
         # Next - Confirmation >>>
-        $ret = GoNext -title "Check Domain -> Error" -msg $MsgSkipErr -flg 3;
+        $ret = GoNext -title "Domain check -> Error" -msg $MsgSkipErr -flg 3;
 
         # Exit for ERROR
         if($ret -ine "s"){ $script:step = -4; }
@@ -1184,8 +1240,7 @@ function Help
     if($script:Help -eq $true){ return; }
     $script:Help = $true;
     
-    # Input = Back[B]
-    # Help
+    # Input = Back[B] for Help
     $txt =
 " General Help:
    1. A free SSL is often limited to 90 days(a year quarter) to expire.
@@ -1195,9 +1250,11 @@ function Help
    5. DNS TXT records can be removed from domain after validation.
    6. Posh-ACME default SSL password is poshacme
    7. Posh-ACME Telemetry: No Telemetry!
-   8. Newer SSL(if order is completed) drops all older SSL certs so...
-   9. You're left with pasting/uploading the new SSL cert to your domain.
-  10. Kindly, make sure you read and agree to the Legal option before using this script.
+   8. Newer SSL(if order is completed) drops all older SSL certs and...
+   9. Unless the SSL is wild and DNS zone is well nested to wild content, you...
+  10. You should paste/upload the new SSL files to every SUB/TLD domain(s) of yours as...
+  11. You should follow the SSL files upload how-to of domain(s) host.
+  12. Kindly, make sure you read and agree to the Legal option before using this script.
 ";
 
     # Next >>>
@@ -1214,32 +1271,32 @@ function Legal
     if($script:Legal -eq $true){ return; }
     $script:Legal = $true;
 
-    # Input = Back[B]
+    # Input = Back[B] for Legal
     $txt =
 "- This Script  :  Hello-Free-Wild-SSL.PS1, ver 2.0.0.
 - Use          :  getting a free Let's Encrypt wild DV SSL.
 - Developer    :  Al bunyan.
 - Website      :  https://ulike123.com/
-- Dependencies :  Posh-ACME Module.
-- Credits to   :  Ryan Bolger, Posh-ACME Module Developer.
+- Dependencies :  Posh-ACME module.
+- Credits to   :  Ryan Bolger, Posh-ACME module Developer.
 - Website      :  https://poshac.me/
 - License      :  MIT License:
     
-    Copyright (c) 2023 Al bunyan $RT
-    Permission is hereby granted, free of charge, to any person obtaining a copy $RT
-    of this software and associated documentation files (the ""Software""), to deal $RT
-    in the Software without restriction, including without limitation the rights $RT
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell $RT
-    copies of the Software, and to permit persons to whom the Software is $RT
-    furnished to do so, subject to the following conditions: $RT
-    The above copyright notice and this permission notice shall be included in all $RT
-    copies or substantial portions of the Software. $RT
-    THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR $RT
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, $RT
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE $RT
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER $RT
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, $RT
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE $RT
+    Copyright (c) 2023 Al bunyan
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the ""Software""), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 
 - Extra Security-Related Links:
@@ -1315,27 +1372,27 @@ function ScriptCycle
             }
             if($opt -eq 4)
             {
-                # New Screen -> Fitching >>>
+                # New Screen -> Fetching >>>
                 StartOver -flg 4;
                 DomainCheck;
             }
             if($opt -eq 5)
             {
-                # New Screen -> Fitching >>>
+                # New Screen -> Fetching >>>
                 StartOver -flg 4;
                 Help;
             }
             if($opt -eq 6)
             {
-                # New Screen -> Fitching >>>
+                # New Screen -> Fetching >>>
                 StartOver -flg 4;
                 Legal;
             }
             if($opt -eq 7)
             {
-                # New Screen -> Bye ! >>>
+                # New Screen -> Bye! >>>
                 StartOver -flg 5 -msg $BYE;
-                # Bye !
+                # Exit!
                 exit;
             }
         }
@@ -1366,24 +1423,32 @@ function Hello-Free-Wild-SSL-PS1-By-Ulike123
         {
             # Verbose
             $msg = 
-"The script couldn't be loaded! $NL
-- You may debug this by running PowerShell as sudo/admin or... $NL
-- Rerun it by right-clicking the file: '(drive|directory|protocol)/path/file.ps1'  or...
-- Type the cmdlet(as module): Hello-Free-Wild-SSL-PS1-By-Ulike123  and press [Enter]...";
+"
+[The End] 
+ 
+ The script couldn't be loaded!
 
-            ### New Screen -> Bye ! >>>
+  - You may debug this by running PowerShell as root/admin or...
+  - Rerun it by right-clicking the file: '(source|resource)/path/file.ps1'  or...
+  - Type the cmdlet(as a module cmd): iex (device)/Path/Hello-Free-Wild-SSL.PS1  and press [Enter] to continue...
+";
+
+            ### New Screen -> Bye! >>>
             StartOver -flg 5 -msg $msg;
         }
         else
         {
             # Verbose
-            $msg = 
-"Posh-ACME Module couldn't be found! $NL
-- Would you like trying installing it ? $RT
-$MsgConfirm";
+            $msg =
+" Posh-ACME module couldn't be found!
+ 
+ Would you like trying installing it?
+
+ $MsgConfirm
+";
 
             # Next >>>
-            $ret = GoNext -title "Dependencies -> Posh-ACME Module" -msg $msg -flg 3;
+            $ret = GoNext -title "Dependencies -> Posh-ACME module" -msg $msg -flg 3;
 
             if($ret -ieq "c")
             {
@@ -1400,19 +1465,24 @@ $MsgConfirm";
                 {
                     # Verbose
                     $msg = 
-"Posh-ACME Module couldn't be installed! $NL
-- You may debug this by installing it yourself as sudo/admin from... $NL
-- https://poshac.me/ $NL
-- and... $NL
-- Rerun terminal/script again!";
+"
+[The End] 
+ 
+ Posh-ACME module couldn't be installed!
 
-                    ### New Screen -> Bye ! >>>
+  - You may debug this by installing it yourself as root/admin from...
+  - https://poshac.me
+  - and...
+  - Rerun terminal/script again!
+";
+
+                    ### New Screen -> Bye! >>>
                     StartOver -flg 5 -msg $msg;
                 }
             }
             else
             {
-                ### New Screen -> Bye ! >>>
+                ### New Screen -> Bye! >>>
                 StartOver -flg 5 -msg $BYE;
             }
         }
@@ -1423,5 +1493,5 @@ $MsgConfirm";
 Hello-Free-Wild-SSL-PS1-By-Ulike123;
 
 ### Hold action for a while after breaking main while cycle...
-Read-Host " $RT Press [Enter] to leave... $RT ";
+Read-Host "$RT Press [Enter] to exit! $RT";
 
