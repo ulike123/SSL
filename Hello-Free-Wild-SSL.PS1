@@ -1276,10 +1276,10 @@ function Legal
 "- This Script  :  Hello-Free-Wild-SSL.PS1, ver 2.0.0.
 - Use          :  getting a free Let's Encrypt wild DV SSL.
 - Developer    :  Al bunyan.
-- Website      :  https://ulike123.com/
+- Website      :  https://ulike123.com
 - Dependencies :  Posh-ACME module.
 - Credits to   :  Ryan Bolger, Posh-ACME module Developer.
-- Website      :  https://poshac.me/
+- Website      :  https://poshac.me
 - License      :  MIT License:
     
     Copyright (c) 2023 Al bunyan
