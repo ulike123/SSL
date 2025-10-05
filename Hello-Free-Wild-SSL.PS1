@@ -520,8 +520,9 @@ function NewSetAccount
   3. Choose $USER or create new if there is no $USER or to solve...
   4. Issues like using old app(s) and then new app(s) with updates/drops.
   5. After choosing the required $USER, option ""New/Renew SSL"" is your next.
-  6. Type [S] to start over if such instructs you with same option number.
-  7. A rare issue, may be cleaning history files.
+  6. Some issues may come out so...
+  7. Type [S] to start over with same option number if such instructs you on error.
+  8. A rare issue, too, may be cleaning history files.
      See: Legal -> Extra...Links -> Posh...Save-To...Folder
  
  TOS:
@@ -869,8 +870,8 @@ function NewRenewSSL
    5. After choosing the required SSL option, TXTs authorization is required.
    6. Do the job of authorization and a press to wait for it.
    7. Some issues may come out so...
-   8. Type [S] to start over if such instructs you with same option number.
-   9. A rare issue, may be cleaning history files.
+   8. Type [S] to start over with same option number if such instructs you on error.
+   9. A rare issue, too, may be cleaning history files.
       See: Legal -> Extra...Links -> Posh...Save-To...Folder
   10. Clean TXTs records then...
   11. Copy/Paste files from ""[ Settings ] -> Folder"" to your host SSL frontend.
